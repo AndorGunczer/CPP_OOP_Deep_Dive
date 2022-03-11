@@ -15,10 +15,11 @@ Phonebook::~Phonebook( void ){
 void Phonebook::add_contact( void ){
 	std::string prompt[5] = {"First Name: ", "Last Name: ", "Nickname: ", "Phone Number: ", "Darkest Secret: "};
 	std::string input[5];
+	std::cin.ignore();
 	for	(int i = 0; i < 5; i++)
 	{
 		std::cout << prompt[i];
-		std::cin >> input[i];
+		getline(std::cin, input[i]);
 	}
 
 	Contact new_contact(input[0], input[1], input[2], input[3], input[4]);
