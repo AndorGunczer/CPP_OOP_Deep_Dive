@@ -1,18 +1,14 @@
 # include "HumanA.hpp"
 
-HumanA::HumanA( const std::string &name, const Weapon &weapon ) {
-    this->_weapon.setType(weapon.getType());
-    this->_name = name;
-}
+HumanA::HumanA( const std::string &name, Weapon &weapon ) : _name(name), _weapon(weapon) {}
 
-HumanA::~HumanA( void ) {
-    return ;
-}
+HumanA::~HumanA( void ) { return; }
 
-const std::string& HumanA::getWeapon( void ) { return this->_weapon.getType(); }
+const std::string& HumanA::getWeapon( void ) const { return this->_weapon.getType(); }
 
 void HumanA::setWeapon( const std::string &weapon ) {
-    this->_weapon.setType(weapon);
+    // this->_weapon.setType(weapon);
+    this->_weapon = weapon;
 }
 
 void HumanA::attack() {

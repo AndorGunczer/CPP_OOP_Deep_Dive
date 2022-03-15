@@ -10,6 +10,6 @@ Weapon::~Weapon( void ) {
     return;
 }
 
-const std::string& Weapon::getType( void ) { return this->_type; }
+const std::string& Weapon::getType( void ) const { return this->_type; }
 
 void Weapon::setType( const std::string& newType ) { this->_type = newType; }
