@@ -9,4 +9,5 @@ int	main( void ) {
 		horde[i].announce();
 	}
 	delete [] horde;
+	system("leaks a.out");
 }
