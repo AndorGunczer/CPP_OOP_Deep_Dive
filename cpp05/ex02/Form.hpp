@@ -26,8 +26,10 @@ class Form {
             }
         };
 
+	protected:
+		// Form(void);
+
     public:
-    	Form(void);
 		Form(std::string name, const int signGrade, const int execGrade);
 		~Form(void);
 		Form(const Form &copy);
@@ -37,6 +39,7 @@ class Form {
 		int getGradeExecute() const;
 		bool getSigned() const;
 		void beSigned(Bureaucrat bureaucrat);
+		bool execute(Bureaucrat const & executor) const;
 };
 
 std::ostream& operator<< (std::ostream& os, const Form& form);

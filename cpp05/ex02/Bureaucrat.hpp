@@ -35,6 +35,7 @@ class Bureaucrat {
         const std::string& getName() const;
         const int& getGrade() const;
         void signForm(Form form);
+		void executeForm(Form const & form);
 };
 
 std::ostream& operator<< (std::ostream& os, const Bureaucrat& obj);

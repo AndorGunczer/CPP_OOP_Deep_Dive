@@ -50,3 +50,8 @@ void Bureaucrat::signForm(Form form) {
 		std::cout << getName() << "couldn’t sign " << form.getGradeSign() << "because he is lazy" << std::endl;
 	return ;
 }
+
+void Bureaucrat::executeForm(Form const & form) {
+	if (form.execute(*this))
+		std::cout << this->name << " executed " << form.getName();
+}

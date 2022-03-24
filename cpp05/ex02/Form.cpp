@@ -1,9 +1,9 @@
 #include "Form.hpp"
 
-Form::Form(void) : _name("unnamed"), _signed(false), _signGrade(150), _execGrade(150)
-{
-	std::cout << "Unnamed form has been created" << std::endl;
-}
+// Form::Form(void) : _name("unnamed"), _signed(false), _signGrade(150), _execGrade(150)
+// {
+// 	std::cout << "Unnamed form has been created" << std::endl;
+// }
 
 Form::Form(std::string name, const int signGrade, const int execGrade) : _name(name), _signGrade(signGrade), _execGrade(execGrade)
 {
@@ -53,4 +53,15 @@ void Form::beSigned(Bureaucrat bureaucrat) {
 	}
 	else
         throw GradeTooLowException();
+}
+
+bool Form::execute(Bureaucrat const & executor) const {
+	if (this->_execGrade > executor.grade) {
+		std::cout << "action called" << std::endl;// action();
+		return true;
+	}
+	else {
+		throw GradeTooLowException();
+		return false;
+	}
 }

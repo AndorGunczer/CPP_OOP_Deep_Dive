@@ -22,10 +22,10 @@ int main(void)
 	}
 	std::cout << form << std::endl;
 
-	std::cout << "\ntry to sign a form with a grade too high\n";
+	std::cout << "\ntry to sign a form with a grade too low\n";
 	std::cout << newbie << std::endl;
-	Form president = Form("top secret", 1, 1);
-	std::cout << president << std::endl;
+	Form presidential = Form("top secret", 1, 1);
+	std::cout << presidential << std::endl;
 	try {
 		president.beSigned(newbie);
 	}
