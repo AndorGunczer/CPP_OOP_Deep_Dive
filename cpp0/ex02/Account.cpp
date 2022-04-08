@@ -30,7 +30,11 @@ Account::Account( void ) {
 	this->_nbWithdrawals = 0;
 }
 
-Account::~Account( void ) { return; }
+Account::~Account( void ) {
+	_displayTimestamp();
+	std::cout << "index:" << this->_accountIndex << ";amount:" << this->_amount << ";closed" << std::endl;
+	return;
+}
 
 int	Account::_nbAccounts = 0;
 int	Account::_totalAmount = 0;

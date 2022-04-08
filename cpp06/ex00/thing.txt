@@ -1,0 +1,41 @@
+	bool dot = false;
+	bool isnum = true;
+	int length = 0;
+	int fractionLength = -1;
+
+	/*	Count Attributes of input	*/
+	for (size_t i = 0; i < _input.size(); i++) {
+		if(std::isdigit(_input[i]) != 1) {
+			if (_input[i] == '.' && !dot)
+				dot = true;
+			else if ((_input[i] == '.' && dot) || _input[i] != '.')
+				isnum = false;
+		}
+		length++;
+		if (dot)
+			fractionLength++;
+	}
+
+	/*	Choose type based on calculations	*/
+
+	if (isnum == true && dot == true) {
+		if (fractionLength <= 7 && fractionLength > 0)
+			_current = 3;
+		else if (fractionLength > 7 && fractionLength <= 15)
+			_current = 4;
+	}
+	else if (isnum == true)
+		_current = 2;
+	else if (length == 1)
+		_current = 1;
+	// else
+		// explicit error;
+
+	// /*	Cast detection first	*/
+
+	switch (_current) {
+		case 1: convertToChar(); break;
+		case 2: convertToInt(); break;
+		case 3: convertToFloat(); break;
+		case 4: convertToDouble(); break;
+	}

@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	}
 	for (int i = 0; i < argc - 1; i++)
 	{
-		for (int j = 0; j < sentence[i].length(); j++)
+		for (size_t j = 0; j < sentence[i].length(); j++)
 		{
 			sentence[i][j] = std::toupper(sentence[i][j]);
 		}

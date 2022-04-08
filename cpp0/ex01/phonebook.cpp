@@ -39,7 +39,7 @@ void Phonebook::add_contact( void ){
 void Phonebook::display( void ){
 	for (int i = 0; i < 8; i++)
 	{
-		std::string formatted_string[3] = {this->contacts[i].first_name, this->contacts[i].last_name, this->contacts[i].nickname};
+		std::string formatted_string[3] = {this->contacts[i].getFirstName(), this->contacts[i].getLastName(), this->contacts[i].getNickName()};
 
 		for (int j = 0; j < 3; j++)
 		{
@@ -72,17 +72,23 @@ void Phonebook::display( void ){
 		return ;
 	}
 	index--;
-	std::cout << this->contacts[index].first_name << std::endl << this->contacts[index].last_name << 
-	std::endl << this->contacts[index].nickname << std::endl << this->contacts[index].phone_number << std::endl <<
-	this->contacts[index].darkest_secret << std::endl;
+	std::cout << this->contacts[index].getFirstName() << std::endl << this->contacts[index].getLastName() << 
+	std::endl << this->contacts[index].getNickName() << std::endl << this->contacts[index].getPhoneNumber() << std::endl <<
+	this->contacts[index].getDarkestSecret() << std::endl;
 	return ;
 }
 
 int	Phonebook::check_index(std::string index){
-	for (int i = 0; i < index.length(); i++)
+	for (size_t i = 0; i < index.length(); i++)
 	{
 		if (std::isdigit(index[i]) == 0)
 			return false;
 	}
 	return true;
 }
+
+// void setContact( const Contact& obj, int index ) { this->contact[index] = obj; }
+// void setNextContact( int nextContact ) { this->nextContact = nextContact; }
+
+// Contact& getContact( int index ) const { return this->contact[index]; }
+// int& getNextContact( void ) const { return this->nextContact; }
