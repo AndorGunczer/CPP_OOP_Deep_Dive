@@ -31,19 +31,66 @@ void	Data::setFloat( const float& input ) { this->_floatVal = input; }
 void	Data::setDouble( const double& input ) { this->_doubleVal = input; }
 
 void	Data::isChar( int *typeSelector ) {
-	std::cout << "isChar ran" << std::endl;
+	if ( _input.size() == 1 && std::isdigit(_input[0]) == 0 )
+		*typeSelector = 1;
 }
 
 void	Data::isInt( int *typeSelector ) {
-	std::cout << "isInt ran" << std::endl;
+	int	inputSize = _input.size();
+	bool isDigit = true;
+
+	for (size_t i = 0; i < inputSize; i++) {
+		if (std::isdigit(_input[i]) == 0)
+			isDigit = false;
+	}
+	if (isDigit)
+		*typeSelector = 2;
 }
 
 void	Data::isFloat( int *typeSelector ) {
-	std::cout << "isFloat ran" << std::endl;
+	int	inputSize = _input.size();
+	bool isFloat = true;
+	bool dot = false;
+
+	if (_input[0] == '.')
+		return ;
+
+	for (size_t i = 0; i < inputSize; i++) {
+		if (std::isdigit(_input[i]) == 0 && i != (inputSize - 1)) {
+			if (_input[i] == '.' && dot == false)
+				dot = true;
+			else if (_input[i] == '.' && dot == true)
+				isFloat = false;
+			else
+				isFloat = false;
+		}
+	}
+	if (_input[inputSize - 1] != 'f')
+		isFloat = false;
+	if (isFloat && dot)
+		*typeSelector = 3;
 }
 
 void	Data::isDouble( int *typeSelector ) {
-	std::cout << "isDouble ran" << std::endl;
+	int	inputSize = _input.size();
+	bool isDouble = true;
+	bool dot = false;
+
+	if (_input[0] == '.')
+		return ;
+
+	for (size_t i = 0; i < inputSize; i++) {
+		if (std::isdigit(_input[i]) == 0) {
+			if (_input[i] == '.' && dot == false)
+				dot = true;
+			else if (_input[i] == '.' && dot == true)
+				isDouble = false;
+			else
+				isDouble = false;
+		}
+	}
+	if (isDouble && dot)
+		*typeSelector = 4;
 }
 
 
@@ -75,24 +122,28 @@ void	Data::detectLiteral() {
 	// ptr[3] = &Data::convertToDouble;
 	*typeSelector = 0;
 	isChar( typeSelector );
+	printf("AFTER ISCHAR: %d\n", *typeSelector);
 	isInt( typeSelector );
+	printf("AFTER ISINT: %d\n", *typeSelector);
 	isFloat( typeSelector );
+	printf("AFTER ISFLOAT: %d\n", *typeSelector);
 	isDouble( typeSelector );
+	printf("AFTER ISDOUBLE: %d\n", *typeSelector);
 
-	(this->*ptr[0])(typeSelector);
+	// (this->*ptr[0])(typeSelector);
+	// printCurrent();
+	// switch (*typeSelector) {
+	// 	case 1: convertToChar( typeSelector ); break;
+	// 	case 2: convertToInt( typeSelector ); break;
+	// 	case 3: convertToFloat( typeSelector ); break;
+	// 	case 4: convertToDouble( typeSelector ); break;
+	// 	// default: nonSense();
+	// }
 
-	switch (*typeSelector) {
-		case 1: convertToChar( typeSelector ); break;
-		case 2: convertToInt( typeSelector ); break;
-		case 3: convertToFloat( typeSelector ); break;
-		case 4: convertToDouble( typeSelector ); break;
-		// default: nonSense();
-	}
-
-	// for (size_t i = 0; i < 4; i++)
+	// for (size_t i = 1; i <= 4; i++)
 	// {
 	// 	if (i != *typeSelector)
-	// 		ptr[i](typeSelector);
+	// 		(this->*ptr[i])(typeSelector);
 	// }
 	
 
