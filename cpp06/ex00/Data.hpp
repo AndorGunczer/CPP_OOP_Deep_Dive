@@ -6,7 +6,7 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:24:06 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/09 18:49:23 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/09 19:02:00 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ class Data {
 		void	convertToDouble();
 		void	convertToInt();
 		void	convertToChar();
+		void	nonsense();
 		void	converter();
 		std::string	checkFloatingPointOrigin();
 		void	printCurrent();

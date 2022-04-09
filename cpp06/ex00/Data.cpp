@@ -210,6 +210,13 @@ void	Data::convertToChar() {
 	}
 }
 
+void	Data::nonsense() {
+	_charError = "impossible";
+	_intError = "impossible";
+	_floatError = "impossible";
+	_doubleError = "impossible";
+}
+
 void	Data::converter() {
 	void (Data::*ptr[4])() = { &Data::convertToChar, &Data::convertToInt, &Data::convertToFloat, &Data::convertToDouble };
 
@@ -219,12 +226,16 @@ void	Data::converter() {
 	isFloat();
 	isDouble();
 
+	if (*typeSelector == 0) {
+		nonsense();
+		return ;
+	}
+
 	switch (*typeSelector) {
 		case 1: convertToChar(); break;
 		case 2: convertToInt(); break;
 		case 3: convertToFloat(); break;
 		case 4: convertToDouble(); break;
-		// default: nonSense(); return ;
 	}
 
 	for (size_t i = 0; i < 4; i++)
@@ -274,20 +285,20 @@ void	Data::printCurrent() {
 
 void	Data::printAll() {
 	if (_charError.compare("") == 0)
-		std::cout << _charVal << std::endl;
+		std::cout << "char: " << _charVal << std::endl;
 	else
-		std::cout << _charError << std::endl;
+		std::cout << "char: " << _charError << std::endl;
 	if (_intError.compare("") == 0)
-		std::cout << _intVal << std::endl;
+		std::cout << "int: " << _intVal << std::endl;
 	else
-		std::cout << _intError << std::endl;
+		std::cout << "int: " << _intError << std::endl;
 	if (_floatError.compare("") == 0)
-		std::cout << _floatVal << "f" << std::endl;
+		std::cout << "float: " << _floatVal << "f" << std::endl;
 	else
-		std::cout << _floatError << std::endl;
+		std::cout << "float: " << _floatError << std::endl;
 	if (_doubleError.compare("") == 0)
-		std::cout << _doubleVal << std::endl;
+		std::cout << "double: " << _doubleVal << std::endl;
 	else
-		std::cout << _doubleError << std::endl;
+		std::cout << "double: " << _doubleError << std::endl;
 }
 
