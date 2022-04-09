@@ -30,31 +30,52 @@ void	Data::setInt( const int& input ) { this->_intVal = input; }
 void	Data::setFloat( const float& input ) { this->_floatVal = input; }
 void	Data::setDouble( const double& input ) { this->_doubleVal = input; }
 
-void	Data::isChar( int *typeSelector ) {
-	if ( _input.size() == 1 && std::isdigit(_input[0]) == 0 )
-		*typeSelector = 1;
+void	Data::isChar() {
+	if ( _input.size() == 1 && std::isdigit(_input[0]) == 0 ) {
+		/* rangeCheck */
+		if (_input[0] >= 0 && _input[0] < 128)
+			*typeSelector = 1;
+	}
 }
 
-void	Data::isInt( int *typeSelector ) {
+void	Data::isInt() {
 	int	inputSize = _input.size();
 	bool isDigit = true;
+	long long	rangeCheck;
 
 	for (size_t i = 0; i < inputSize; i++) {
 		if (std::isdigit(_input[i]) == 0)
 			isDigit = false;
 	}
-	if (isDigit)
-		*typeSelector = 2;
+	if (isDigit) {
+		rangeCheck = stoll(_input);
+		if (rangeCheck >= INT_MIN && rangeCheck <= INT_MAX)
+			*typeSelector = 2;
+	}
 }
 //-inff , +inff and nan
-void	Data::isFloat( int *typeSelector ) {
+void	Data::isFloat() {
 	int	inputSize = _input.size();
 	bool isFloat = true;
 	bool dot = false;
 
 	// Special Type Handling
 
-	// if (std::strcmp(_input, "-inff"))
+	if (_input.compare("-inff") == 0) {
+		_floatError = "-inff";
+		*typeSelector = 3;
+		return ;
+	}
+	if (_input.compare("+inff") == 0) {
+		_floatError = "+inff";
+		*typeSelector = 3;
+		return ;
+	}
+	if (_input.compare("nanf") == 0) {
+		_floatError = "nanf";
+		*typeSelector = 3;
+		return ;
+	}
 
 	if (_input[0] == '.')
 		return ;
@@ -76,10 +97,26 @@ void	Data::isFloat( int *typeSelector ) {
 }
 
 //-inf, +inf and nan
-void	Data::isDouble( int *typeSelector ) {
+void	Data::isDouble() {
 	int	inputSize = _input.size();
 	bool isDouble = true;
 	bool dot = false;
+
+	if (_input.compare("-inf") == 0) {
+		_floatError = "-inf";
+		*typeSelector = 4;
+		return ;
+	}
+	if (_input.compare("+inf") == 0) {
+		_floatError = "+inf";
+		*typeSelector = 4;
+		return ;
+	}
+	if (_input.compare("nan") == 0) {
+		_floatError = "nan";
+		*typeSelector = 4;
+		return ;
+	}
 
 	if (_input[0] == '.')
 		return ;
@@ -99,73 +136,124 @@ void	Data::isDouble( int *typeSelector ) {
 }
 
 
-void	Data::convertToFloat( int *typeSelector ) {
-	if (*typeSelector == 3)
+void	Data::convertToFloat() {
+	if (*typeSelector == 3 && _floatError.compare("") == 0)
 		_floatVal = stof(_input);
 	else if (*typeSelector == 1)
 		_floatVal = static_cast<float>(_charVal);
 	else if (*typeSelector == 2)
 		_floatVal = static_cast<float>(_intVal);
-	else if (*typeSelector == 4)
-		_floatVal = static_cast<float>(_doubleVal);
+	else if (*typeSelector == 4) {
+		_floatError = checkFloatingPointOrigin();
+		if (_floatError.compare("") == 0)
+			_floatVal = static_cast<float>(_doubleVal);
+		else
+			_floatError.push_back('f');
+	}
 }
 
-void	Data::convertToDouble( int *typeSelector ) {
-	if (*typeSelector == 4)
+void	Data::convertToDouble() {
+	if (*typeSelector == 4 && _doubleError.compare("") == 0)
 		_doubleVal = stod(_input);
 	else if (*typeSelector == 1)
 		_doubleVal = static_cast<double>(_charVal);
 	else if (*typeSelector == 2)
 		_doubleVal = static_cast<double>(_intVal);
-	else if (*typeSelector == 3)
-		_doubleVal = static_cast<double>(_floatVal);
+	else if (*typeSelector == 3) {
+		_doubleError = checkFloatingPointOrigin();
+		if (_doubleError.compare("") == 0)
+			_doubleVal = static_cast<double>(_floatVal);
+		else
+			_doubleError.pop_back();
+	}
 }
 
-void	Data::convertToInt( int *typeSelector ) {
+void	Data::convertToInt() {
 	if (*typeSelector == 2)
 		_intVal = stoi(_input);
 	else if (*typeSelector == 1)
 		_intVal = static_cast<int>(_charVal);
-	else if (*typeSelector == 3)
-		_intVal = static_cast<int>(_floatVal);
-	else if (*typeSelector == 4)
-		_intVal = static_cast<int>(_doubleVal);
+	else if (*typeSelector == 3) {
+		if (checkFloatingPointOrigin().compare("") != 0 || !(_floatVal >= INT_MIN && _floatVal <= INT_MAX))
+			_intError = "impossible";
+		else
+			_intVal = static_cast<int>(_floatVal);
+	}
+	else if (*typeSelector == 4) {
+		if (checkFloatingPointOrigin().compare("") != 0 || !(_doubleVal >= INT_MIN && _doubleVal <= INT_MAX))
+			_intError = "impossible";
+		else
+			_intVal = static_cast<int>(_doubleVal);
+	}
 }
 
-void	Data::convertToChar( int *typeSelector ) {
+void	Data::convertToChar() {
 	if (*typeSelector == 1)
 		_charVal = _input[0];
-	else if (*typeSelector == 2)
-		_charVal = static_cast<char>(_intVal);
-	else if (*typeSelector == 3)
-		_charVal = static_cast<char>(_floatVal);
-	else if (*typeSelector == 4)
-		_charVal = static_cast<char>(_doubleVal);
+	else if (*typeSelector == 2) {
+		if (!(_intVal >= 0 && _intVal <= 127))
+			_charError = "impossible";
+		else
+			_charVal = static_cast<char>(_intVal);
+	}
+	else if (*typeSelector == 3) {
+		if (checkFloatingPointOrigin().compare("") != 0 || !(_floatVal >= 0 && _floatVal <= 127))
+			_charError = "impossible";
+		else
+			_charVal = static_cast<char>(_floatVal);
+	}
+	else if (*typeSelector == 4) {
+		if (checkFloatingPointOrigin().compare("") != 0 || !(_doubleVal >= 0 && _doubleVal <= 127))
+			_charError = "impossible";
+		else
+			_charVal = static_cast<char>(_doubleVal);
+	}
 }
 
 void	Data::converter() {
-	// int *typeSelector = new int;
-	void (Data::*ptr[4])(int*) = { &Data::convertToChar, &Data::convertToInt, &Data::convertToFloat, &Data::convertToDouble };
+	void (Data::*ptr[4])() = { &Data::convertToChar, &Data::convertToInt, &Data::convertToFloat, &Data::convertToDouble };
 
 	*typeSelector = 0;
-	isChar( typeSelector );
-	isInt( typeSelector );
-	isFloat( typeSelector );
-	isDouble( typeSelector );
+	isChar();
+	isInt();
+	isFloat();
+	isDouble();
 
 	switch (*typeSelector) {
-		case 1: convertToChar( typeSelector ); break;
-		case 2: convertToInt( typeSelector ); break;
-		case 3: convertToFloat( typeSelector ); break;
-		case 4: convertToDouble( typeSelector ); break;
-		// default: nonSense();
+		case 1: convertToChar(); break;
+		case 2: convertToInt(); break;
+		case 3: convertToFloat(); break;
+		case 4: convertToDouble(); break;
+		// default: nonSense(); return ;
 	}
 
 	for (size_t i = 0; i < 4; i++)
 	{
 		if (i + 1 != *typeSelector)
-			(this->*ptr[i])(typeSelector);
+			(this->*ptr[i])();
 	}
+}
+
+std::string	Data::checkFloatingPointOrigin() {
+	const char * c = _input.c_str();
+
+	if (*typeSelector == 3) {
+		if (std::strcmp(c, "nanf") == 0)
+			return "nanf";
+		else if (std::strcmp(c, "-inff") == 0)
+			return "-inff";
+		else if (std::strcmp(c, "+inff") == 0)
+			return "+inff";
+	}
+	else if (*typeSelector == 4) {
+		if (std::strcmp(c, "nan") == 0)
+			return "nan";
+		else if (std::strcmp(c, "-inf") == 0)
+			return "-inf";
+		else if (std::strcmp(c, "+inf") == 0)
+			return "+inf";
+	}
+	return "";
 }
 
 void	Data::printCurrent() {
@@ -185,9 +273,21 @@ void	Data::printCurrent() {
 }
 
 void	Data::printAll() {
-	std::cout << _charVal << std::endl;
-	std::cout << _intVal << std::endl;
-	std::cout << _floatVal << std::endl;
-	std::cout << _doubleVal << std::endl;
+	if (_charError.compare("") == 0)
+		std::cout << _charVal << std::endl;
+	else
+		std::cout << _charError << std::endl;
+	if (_intError.compare("") == 0)
+		std::cout << _intVal << std::endl;
+	else
+		std::cout << _intError << std::endl;
+	if (_floatError.compare("") == 0)
+		std::cout << _floatVal << "f" << std::endl;
+	else
+		std::cout << _floatError << std::endl;
+	if (_doubleError.compare("") == 0)
+		std::cout << _doubleVal << std::endl;
+	else
+		std::cout << _doubleError << std::endl;
 }
 

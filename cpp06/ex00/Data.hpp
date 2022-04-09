@@ -6,13 +6,14 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:24:06 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/09 16:44:10 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/09 18:49:23 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include <iostream>
 #include <stdio.h>
+#include <limits.h>
 
 #define CHAR 1
 #define INT 2
@@ -56,16 +57,17 @@ class Data {
 		void	setDouble( const double& input );
 		void	setString( const std::string& input );
 		
-		void	isChar( int *typeSelector );
-		void	isInt( int *typeSelector );
-		void	isFloat( int *typeSelector );
-		void	isDouble( int *typeSelector );
+		void	isChar();
+		void	isInt();
+		void	isFloat();
+		void	isDouble();
 
-		void	convertToFloat( int *typeSelector );
-		void	convertToDouble( int *typeSelector );
-		void	convertToInt( int *typeSelector );
-		void	convertToChar( int *typeSelector );
+		void	convertToFloat();
+		void	convertToDouble();
+		void	convertToInt();
+		void	convertToChar();
 		void	converter();
+		std::string	checkFloatingPointOrigin();
 		void	printCurrent();
 		void	printAll();
 };
