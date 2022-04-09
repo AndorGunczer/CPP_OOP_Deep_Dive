@@ -6,7 +6,7 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:24:06 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/08 23:04:53 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:44:10 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 class Data {
 	private:
 		std::string	_input;
-		int	_current;
+		int	*typeSelector;
 		char _charVal;
 		int	_intVal;
 		float _floatVal;
@@ -65,6 +65,7 @@ class Data {
 		void	convertToDouble( int *typeSelector );
 		void	convertToInt( int *typeSelector );
 		void	convertToChar( int *typeSelector );
-		void	detectLiteral();
+		void	converter();
 		void	printCurrent();
+		void	printAll();
 };

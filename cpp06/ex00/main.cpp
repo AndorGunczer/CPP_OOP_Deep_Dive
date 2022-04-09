@@ -6,7 +6,7 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 18:10:53 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/08 20:46:18 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/09 16:47:54 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	main(int argc, char *argv[]) {
 		return (1);
 
 	Data test = Data(argv[1]);
-	test.detectLiteral();
-	test.printCurrent();
+	test.converter();
+	// test.printCurrent();
+	test.printAll();
 
 	return (0);
 }
