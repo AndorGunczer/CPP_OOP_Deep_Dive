@@ -6,19 +6,15 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 01:36:28 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/10 02:34:49 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/11 12:52:15 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iter.hpp"
 
-// void shiftForward(char &a) {
-// 	a += 1;
+// void shiftForward(char const &a) {
+// 	std::cout << (char)(a + 1) << std::endl;
 // }
-
-int plusplus(char &a) {
-	a += 1;
-}
 
 // int	main(void) {
 // 	char array[5] = {'a', 'b', 'c', 'd', '\0'};
