@@ -6,7 +6,7 @@
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 13:06:35 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/11 16:48:59 by agunczer         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:10:26 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Array {
 			return *this;
 		}
 
-		T& operator[](int i) {
+		T& operator[](int i) { // this thing
 			if (i >= arraySize) {
 				std::cout << "Index out of bounds, first value returned" << std::endl;
             	return array[0];
