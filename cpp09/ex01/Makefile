@@ -5,16 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/26 16:49:39 by agunczer          #+#    #+#              #
-#    Updated: 2024/02/05 11:33:55 by agunczer         ###   ########.fr        #
+#    Created: 2024/02/06 17:53:22 by agunczer          #+#    #+#              #
+#    Updated: 2024/02/12 14:26:41 by agunczer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = main
+
+NAME = RPN
 
 CC = g++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++11
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp
 

@@ -5,27 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 17:15:13 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/13 09:49:54 by agunczer         ###   ########.fr       */
+/*   Created: 2024/02/05 11:34:12 by agunczer          #+#    #+#             */
+/*   Updated: 2024/02/05 11:42:23 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef EASYFIND_HPP
+#define EASYFIND_HPP
+
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <list>
-#include <array>
-#include <algorithm>
-#include <string>
+#include <deque>
 
-template <typename T>
-	typename T::iterator easyfind(T cont, const int& toFind) {
-		typename T::iterator it = std::find(cont.begin(), cont.end(), toFind);
-		
-		if (it == cont.end())
-		{
-			std::cout << "not found" << std::endl;
-			return it;
-		}
-		else
-			return it;
-	}
+template <class T> typename T::iterator easyFind(T*, int);
+
+#endif

@@ -5,37 +5,39 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 15:37:07 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/13 18:57:14 by agunczer         ###   ########.fr       */
+/*   Created: 2024/02/05 11:33:42 by agunczer          #+#    #+#             */
+/*   Updated: 2024/02/06 10:56:34 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPAN_HPP
-#define SPAN_HPP
+#ifndef SPAN_H
+#define SPAN_H
 
-#include <vector>
-#include <algorithm>
-#include <limits.h>
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <cstdlib>
 
 class Span {
-	private:
-		unsigned int	_N;
+    private:
+        typedef std::vector<int>::iterator vector_iterator;
+        std::vector<int> *numberStore;
+        vector_iterator currentMax;
 
-	public:
-		std::vector<int> _vect;
-		Span(unsigned int N);
-		~Span();
-		Span( const Span& obj );
-		Span& operator=( const Span& obj );
-
-		// const int& getVect( int index );
-		// void setVect( int index, int value );
-		
-		void addNumber( int number );
-		int	shortestSpan();
-		int	longestSpan();
-		void fillSpan();
+    public:
+        Span();
+        Span(unsigned int N);
+        Span(const Span &a);
+        ~Span();
+        Span& operator=(const Span &a);
+        
+        void addNumber();
+        void addNumber(int amount);
+        void fillVector();
+        void getVector();
+        int getSingleNumber(int index);
+        int shortestSpan();
+        int longestSpan();
 };
 
 #endif

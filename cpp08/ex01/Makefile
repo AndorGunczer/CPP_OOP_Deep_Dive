@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/01 18:10:56 by agunczer          #+#    #+#              #
-#    Updated: 2022/04/13 15:37:01 by agunczer         ###   ########.fr        #
+#    Created: 2022/03/26 16:49:39 by agunczer          #+#    #+#              #
+#    Updated: 2024/02/05 11:33:58 by agunczer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = serialize
+NAME = main
 
-CC = clang++
+CC = g++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -20,7 +20,7 @@ SRC = main.cpp Span.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
-HEAD = Span.hpp
+# HEAD = 
 all : $(NAME)
 
 $(NAME) : $(SRC) $(HEAD)

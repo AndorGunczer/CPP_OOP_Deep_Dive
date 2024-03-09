@@ -5,62 +5,128 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/13 15:37:09 by agunczer          #+#    #+#             */
-/*   Updated: 2022/04/13 19:04:36 by agunczer         ###   ########.fr       */
+/*   Created: 2024/02/05 11:33:48 by agunczer          #+#    #+#             */
+/*   Updated: 2024/02/06 13:31:09 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
-Span::Span(unsigned int N) : _N(N) {} 
-Span::~Span() {}
-Span::Span( const Span& obj ) {
-	this->_N = obj._N;
-	std::copy(obj._vect.begin(), obj._vect.end(), this->_vect.begin());
-}
-Span& Span::operator=( const Span& obj ) {
-	this->_N = obj._N;
-	std::copy(obj._vect.begin(), obj._vect.end(), this->_vect.begin());
-	return *this;
+Span::Span() {
+    this->numberStore = new std::vector<int>(0);
+    this->currentMax = this->numberStore->begin();
 }
 
-void Span::addNumber( int number ) {
-	if (this->_vect.size() < _N) _vect.push_back(number);
-	else throw std::runtime_error("You Failed\n");
+Span::Span(unsigned int N) {
+    this->numberStore = new std::vector<int>(N);
+    this->currentMax = this->numberStore->begin();
 }
 
-int	Span::shortestSpan() {
-	std::vector<int>::iterator i1;
-	std::vector<int>::iterator j1;
-	int shortest = INT_MAX;
-
-	for ( i1 = _vect.begin(); i1 != _vect.end(); i1++)
-	{
-		for (j1 = std::next(i1, 1); j1 != _vect.end(); j1++)
-		{
-			// std::cout << abs(*j1 - *i1) << std::endl;
-			if (abs(*j1 - *i1) < shortest) shortest = abs(*j1 - *i1);
-		}
-		
-	}
-	return shortest;
+Span::Span(const Span &a) {
+    *this = a;
 }
 
-int	Span::longestSpan() {
-	std::vector<int>::iterator i1;
-	std::vector<int>::iterator j1;
-	int longest = 0;
-
-	for ( i1 = _vect.begin(); i1 != _vect.end(); ++i1)
-	{
-		for (j1 = std::next(i1, 1); j1 != _vect.end(); ++j1)
-		{
-			if (abs(*j1 - *i1) > longest) longest = abs(*j1 - *i1);
-		}
-	}
-	return longest;
+Span::~Span() {
+    delete numberStore;
 }
 
-void Span::fillSpan() {
-	_vect.assign(_N, true);
+Span& Span::operator=(const Span &a) {
+    this->currentMax = a.currentMax;
+    return *this;
+} 
+
+void Span::addNumber() {
+    int limit = 200000;
+
+    try {
+        if (this->currentMax < this->numberStore->end()) {
+        *(this->currentMax) = rand() % limit;
+        currentMax++;
+        }
+        else
+            throw std::out_of_range("Err: Cannot Add Number to Container: Out of Range\n");
+    } catch (const std::out_of_range &e) {
+        std::cout << e.what();
+        return;
+    }
+}
+
+void Span::addNumber(int amount) {
+    int limit = 200000;
+    vector_iterator futureMax = this->currentMax + (amount);
+
+    try {
+        if (futureMax <= this->numberStore->end()) {
+            for (; currentMax < futureMax; currentMax++) {
+                *(this->currentMax) = rand() % limit;
+            }
+        }
+        else
+            throw std::out_of_range("Err: Cannot Add Number to Container: Out of Range\n");
+    } catch ( const std::out_of_range &e ) {
+        std::cout << e.what();
+    }
+}
+
+void Span::fillVector() {
+    int limit = 200000;
+    
+    for (std::vector<int>::iterator it = this->numberStore->begin(); it < this->numberStore->end(); it++) {
+        *it = rand() % limit;
+    }
+}
+
+void Span::getVector() {
+    std::cout << "getvector called" << std::endl;
+
+    for (std::vector<int>::iterator it = this->numberStore->begin(); it < this->numberStore->end(); it++)
+        std::cout << *it << std::endl;
+}
+
+int Span::getSingleNumber( int index ) {
+    return this->numberStore->at(index);
+}
+
+int Span::shortestSpan() {
+    try {
+        if (numberStore->size() <= 1)
+            throw std::length_error("\n");
+    } catch (const std::length_error &e) {
+        std::cerr << e.what();
+        return -1;
+    }
+
+    std::vector<int> * copiedNumberStore = new std::vector<int>(*(this->numberStore));
+    std::vector<int>::iterator it = copiedNumberStore->begin();
+    int smallestDifference = abs(*it - *(it+1));
+
+    std::sort(copiedNumberStore->begin(), copiedNumberStore->end());
+    for(it = copiedNumberStore->begin(); it < copiedNumberStore->end() - 1; it++) {
+        int currentDifference = abs(*it - *(it+1));
+        if (currentDifference < smallestDifference)
+            smallestDifference = currentDifference;
+    }
+
+    delete copiedNumberStore;
+
+    return smallestDifference;
+}
+
+int Span::longestSpan() {
+    try {
+        if (numberStore->size() <= 1)
+            throw std::length_error("\n");
+    } catch (const std::length_error &e) {
+        std::cerr << e.what();
+        return -1;
+    }
+    std::vector<int> * copiedNumberStore = new std::vector<int>(*(this->numberStore));
+
+    std::sort(copiedNumberStore->begin(), copiedNumberStore->end());
+    int first = *(copiedNumberStore->begin());
+    int last = *(copiedNumberStore->end() - 1);
+
+    delete copiedNumberStore;
+
+    return abs(last - first);
 }

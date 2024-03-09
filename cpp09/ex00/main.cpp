@@ -5,24 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: agunczer <agunczer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 11:34:04 by agunczer          #+#    #+#             */
-/*   Updated: 2024/02/05 12:23:53 by agunczer         ###   ########.fr       */
+/*   Created: 2024/02/06 17:50:11 by agunczer          #+#    #+#             */
+/*   Updated: 2024/02/12 10:45:16 by agunczer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "easyfind.tpp"
+#include "BitcoinExchange.cpp"
 
-int main() {
-    std::list<int> array;
-    array.push_back(6);
-    array.push_back(2);
-    array.push_back(3);
+int main(int argc, char **argv) {
+    if (argc != 2)
+        return -1;
 
-    std::list<int>::iterator ptr = easyFind(&array, 12);
-
-    std::cout << "Not Found: " << std::endl << "    Value we are looking for: 12" << std::endl << "    Value returned: " << *ptr << std::endl;
-
-    ptr = easyFind(&array, 6);
-
-    std::cout << "Found: " << std::endl << "    Value we are looking for: 6" << std::endl << "    Value returned: " << *ptr << std::endl;
+    try {
+        BitcoinExchange test(argv[1]);
+        test.run();
+    } catch (std::invalid_argument &e) {
+        std::cout << e.what() << std::endl;
+    }
+    // print_map(stringStore);
 }
